@@ -1,0 +1,16 @@
+{
+  "serverPort": 3000,
+  "openaiApiKey": "YOUR_OPENAI_API_KEY",
+  "aws": {
+    "accessKeyId": "YOUR_AWS_ACCESS_KEY_ID",
+    "secretAccessKey": "YOUR_AWS_SECRET_ACCESS_KEY",
+    "region": "YOUR_AWS_REGION"
+  },
+  "database": {
+    "host": "YOUR_DATABASE_HOST",
+    "port": 5432,
+    "username": "YOUR_DATABASE_USERNAME",
+    "password": "YOUR_DATABASE_PASSWORD",
+    "name": "YOUR_DATABASE_NAME"
+  }
+}

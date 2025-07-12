@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.upload-section {
+    margin: 20px 0;
+}
+
+.upload-section input[type="file"] {
+    display: block;
+    margin: 0 auto;
+}
+
+.preview-section {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.preview-section img {
+    max-width: 100%;
+    border-radius: 8px;
+}
