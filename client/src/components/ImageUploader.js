@@ -32,24 +32,34 @@ const ImageUploader = () => {
             return;
         }
 
-        if (!backgroundPrompt.trim()) {
-            setError('Please enter a background description.');
-            return;
-        }
+        // if (!backgroundPrompt.trim()) {
+        //     setError('Please enter a background description.');
+        //     return;
+        // }
 
         const formData = new FormData();
         formData.append('image', selectedFile);
-        formData.append('prompt', backgroundPrompt);
+        // formData.append('prompt', backgroundPrompt);
 
         setLoading(true);
         setError(null);
 
+        console.log('Selected file:', selectedFile);
+        console.log('FormData:', formData.get('image'));
+
         try {
-            const response = await axios.post('/api/generate-background', formData, {
+            // const response = await axios.post('/api/generate-background', formData, {
+                // const response = await axios.post('http://localhost:5050/api/generate-background', formData, {
+            // const response = await axios.post('http://localhost:5050/api/process', formData, {
+            //     headers: {
+            //         'Content-Type': 'multipart/form-data',
+            //     },
+            //     // timeout: 60000, // 60 секунд таймаут для OpenAI API
+            // });
+            const response = await axios.post('http://localhost:5050/api/process', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
-                timeout: 60000, // 60 секунд таймаут для OpenAI API
             });
             
             setGeneratedImage(response.data.imageUrl);
@@ -121,7 +131,8 @@ const ImageUploader = () => {
 
             <button 
                 onClick={handleGenerateBackground} 
-                disabled={loading || !selectedFile || !backgroundPrompt.trim()}
+                // disabled={loading || !selectedFile || !backgroundPrompt.trim()}
+                disabled={loading || !selectedFile}
                 style={{
                     backgroundColor: loading ? '#ccc' : '#007bff',
                     color: 'white',
@@ -136,7 +147,23 @@ const ImageUploader = () => {
                 {loading ? 'Generating Background...' : 'Generate New Background'}
             </button>
 
-            {error && <p className="error" style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
+            {error && (
+                <p 
+                    className="error" 
+                    style={{ 
+                        color: 'white', 
+                        backgroundColor: '#ff4d4f', 
+                        padding: '10px', 
+                        borderRadius: '8px', 
+                        marginTop: '10px', 
+                        textAlign: 'center',
+                        fontWeight: 'bold',
+                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+                    }}
+                >
+                    {error}
+                </p>
+            )}
 
             {/* Результат генерации */}
             {generatedImage && (

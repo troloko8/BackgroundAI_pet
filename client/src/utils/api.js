@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api'; // Update with your server URL
+const API_URL = 'http://localhost:5050/api'; // Update with your server URL
 
 export const uploadImage = async (formData) => {
     try {

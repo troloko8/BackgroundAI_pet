@@ -1,5 +1,7 @@
 class ImageController {
     async uploadImage(req, res) {
+        console.log("req: ", req)
+        console.log("res: ", res)
         try {
             // Handle image upload logic here
             const file = req.file;
@@ -14,6 +16,11 @@ class ImageController {
     }
 
     async processImage(req, res) {
+        console.log('File received:', req.file);
+        if (!req.file) {
+            return res.status(400).json({ error: 'No file uploaded' });
+        }
+        
         try {
             // Logic to process the image and add background using OpenAI service
             const { imagePath } = req.body;
@@ -21,9 +28,9 @@ class ImageController {
                 return res.status(400).json({ message: 'Image path is required' });
             }
             // Call the OpenAI service to generate background
-            // const result = await openaiService.generateBackground(imagePath);
-            // return res.status(200).json({ message: 'Image processed successfully', result });
-            return res.status(200).json({ message: 'Image processed successfully' }); // Placeholder response
+            const result = await openaiService.generateBackground(imagePath);
+            return res.status(200).json({ message: 'Image processed successfully', result });
+            // return res.status(200).json({ message: 'Image processed successfully' }); // Placeholder response
         } catch (error) {
             return res.status(500).json({ message: 'Error processing image', error });
         }
