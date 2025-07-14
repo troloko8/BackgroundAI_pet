@@ -62,14 +62,24 @@ const ImageUploader = () => {
                 },
             });
             
-            setGeneratedImage(response.data.imageUrl);
+            const b64 = response.data?.result;
+            if (b64) {
+                setGeneratedImage(`data:image/png;base64,${b64}`);
+            } else {
+                setError('No image data received from server.');
+            }
             console.log('Background generation successful:', response.data);
         } catch (err) {
+            // debugger
             console.error('Error generating background:', err);
-            if (err.response?.data?.error) {
-                setError(err.response.data.error);
+            if (err.response?.data?.error.message) {
+                setError(err.response?.data?.error.message || 'Error generating background. Please try again.');
             } else if (err.code === 'ECONNABORTED') {
                 setError('Request timed out. Please try again.');
+            } else if (err.response?.status === 413) {
+                setError('File too large. Please upload a smaller image (max 4 MB).');
+            } else if (err.response?.status === 400) {
+                setError('Bad request. Please check the uploaded file and try again.');
             } else {
                 setError('Error generating background. Please try again.');
             }

@@ -1,7 +1,7 @@
+import generateBackground from "../services/openaiService.js";
+
 class ImageController {
     async uploadImage(req, res) {
-        console.log("req: ", req)
-        console.log("res: ", res)
         try {
             // Handle image upload logic here
             const file = req.file;
@@ -15,26 +15,22 @@ class ImageController {
         }
     }
 
-    async processImage(req, res) {
-        console.log('File received:', req.file);
-        if (!req.file) {
-            return res.status(400).json({ error: 'No file uploaded' });
-        }
-        
-        try {
-            // Logic to process the image and add background using OpenAI service
-            const { imagePath } = req.body;
-            if (!imagePath) {
-                return res.status(400).json({ message: 'Image path is required' });
-            }
-            // Call the OpenAI service to generate background
-            const result = await openaiService.generateBackground(imagePath);
-            return res.status(200).json({ message: 'Image processed successfully', result });
-            // return res.status(200).json({ message: 'Image processed successfully' }); // Placeholder response
-        } catch (error) {
-            return res.status(500).json({ message: 'Error processing image', error });
-        }
+async processImage(req, res) {
+    if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
     }
+
+    try {
+        // Здесь работайте с req.file.buffer или req.file.path (если diskStorage)
+        // Например, передайте req.file.buffer в openaiService
+        // const result = await openaiService.generateBackground(req.file.buffer);
+        const result = await generateBackground(req.file?.buffer);
+
+        return res.status(200).json({ message: 'Image processed successfully', result });
+    } catch (error) {
+        return res.status(500).json({ message: 'Error processing image', error });
+    }
+}
 }
 
 export default new ImageController();
